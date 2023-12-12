@@ -154,7 +154,7 @@ def run_simulation(args):
         world.tick()
     print("starting record")
     t=0
-    nb_for_changing_behaviour=5
+    nb_for_changing_behaviour=50
     pbar = tqdm(total = args.nb_img, desc =  "Simulating")
     while t<args.nb_img:
         # Carla Tick

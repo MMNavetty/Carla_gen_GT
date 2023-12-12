@@ -256,12 +256,14 @@ def change_actor_behaviour(world, traffic_manager, vehicles_list):
     print("set random behaviour")
     # set random behaviour
     for actor in all_vehicle_actors:
-        speed_dif = random.uniform(behaviour_dict['speed_dif'][0], behaviour_dict['speed_dif'][1])
+        if(behaviour_dict["percent_speed_change"]>random.random()):
+            speed_dif = random.uniform(behaviour_dict['speed_dif'][0], behaviour_dict['speed_dif'][1])
+            traffic_manager.vehicle_percentage_speed_difference(actor, speed_dif)
         # if(random.randint(0,2)==0 and speed_dif!=100): speed_dif-=100
-
-        dst_lead_veh = random.uniform(behaviour_dict['dst_lead_veh'][0], behaviour_dict['dst_lead_veh'][1])
-        veh_lane_off = random.uniform(behaviour_dict['veh_lane_off'][0], behaviour_dict['veh_lane_off'][1])
-        print("veh with speed percentage %d, offset %.2f, dst to lead veh %.2f. "%(speed_dif, veh_lane_off, dst_lead_veh))
-        traffic_manager.vehicle_percentage_speed_difference(actor, speed_dif)
-        traffic_manager.distance_to_leading_vehicle(actor, dst_lead_veh)    # tailgating
-        traffic_manager.vehicle_lane_offset(actor, veh_lane_off)
+        if(behaviour_dict["percent_dst_lead_veh_modif_on_tick"]>random.random()):
+            dst_lead_veh = random.uniform(behaviour_dict['dst_lead_veh'][0], behaviour_dict['dst_lead_veh'][1])
+            traffic_manager.distance_to_leading_vehicle(actor, dst_lead_veh)    # tailgating
+        if(behaviour_dict["percent_lane_off_change"]>random.random()):
+            veh_lane_off = random.uniform(behaviour_dict['veh_lane_off'][0], behaviour_dict['veh_lane_off'][1])
+            traffic_manager.vehicle_lane_offset(actor, veh_lane_off)
+        # print("veh with speed percentage %d, offset %.2f, dst to lead veh %.2f. "%(speed_dif, veh_lane_off, dst_lead_veh))
